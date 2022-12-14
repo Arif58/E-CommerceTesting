@@ -8,4 +8,8 @@ public class BagsPage {
     public BagsPage(WebDriver driver) {
         this.driver = driver;
     }
+
+    public String getPageTitle() {
+        return driver.getTitle();
+    }
 }

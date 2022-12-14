@@ -38,6 +38,8 @@ public class HomePage {
         return new CartPage(driver);
     }
 
+
+
     public BagsPage clickBags() {
         WebElement gear = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ui-id-6\"]")));
         Actions actions = new Actions(driver);

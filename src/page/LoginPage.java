@@ -15,7 +15,7 @@ public class LoginPage {
     }
 
     public HomePage login(){
-        driver.findElement(email).sendKeys("arif@mail.com");
+        driver.findElement(email).sendKeys("arif1@mail.com");
         driver.findElement(password).sendKeys("Password123");
         driver.findElement(btnLogin).click();
         return new HomePage(driver);
