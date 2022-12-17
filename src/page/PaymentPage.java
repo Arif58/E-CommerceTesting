@@ -13,27 +13,27 @@ import java.util.List;
 
 public class PaymentPage {
     private WebDriver driver;
+    String shippingAddress;
+
     private By placeOrder = new By.ByXPath("/html/body/div[3]/main/div[2]/div/div[2]/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[2]/div[2]/div[4]/div/button");
     public PaymentPage(WebDriver driver) {
         this.driver = driver;
     }
+    public String getUrl() {
+        WebElement wait = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[3]/main/div[2]/div/div[2]/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[2]/div[2]")));
+        return driver.getCurrentUrl();
+    }
 
-    public void shippingInfo() {
-        Boolean wait = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("/html/body/div[1]/div/img")));
-        if (wait) {
-            List<WebElement> qty = driver.findElements(By.className("billing-address-details"));
-            ArrayList<String> barang = new ArrayList<>();
-            Integer i = 0;
-            for (WebElement webElement : qty) {
-                String name = webElement.getText();
-//                barang.add(name);
-//                System.out.println("Data User : " + name.split("\n").length);
-//                i++;
-                System.out.println(name);
-            }
-
-//            System.out.println(name);
-        }
+    public String shippingInfo() {
+//        Boolean wait = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("/html/body/div[1]/div/img")));
+//        System.out.println(wait);
+        WebElement wait = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[3]/main/div[2]/div/div[2]/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[2]/div[2]")));
+//        if (wait) {
+//            shippingAddress = driver.findElement(By.className("shipping-information-content")).getText();
+//            System.out.println(info);
+//        }
+        shippingAddress = driver.findElement(By.className("shipping-information-content")).getText();
+        return shippingAddress;
 
     }
 
