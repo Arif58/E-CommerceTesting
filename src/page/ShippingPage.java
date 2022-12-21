@@ -16,7 +16,6 @@ public class ShippingPage {
     private WebDriver driver;
     String urlShipping;
     String valueOfState;
-    String valueOfCountry;
     private By firstName = new By.ByXPath("/html/body/div[2]/main/div[2]/div/div[2]/div[4]/ol/li[1]/div[2]/form/div/div[1]/div/input");
     private By lastName = new By.ByXPath("/html/body/div[2]/main/div[2]/div/div[2]/div[4]/ol/li[1]/div[2]/form/div/div[2]/div/input");
     private By company = new By.ByXPath("/html/body/div[2]/main/div[2]/div/div[2]/div[4]/ol/li[1]/div[2]/form/div/div[3]/div/input");
@@ -35,10 +34,6 @@ public class ShippingPage {
     public void inputData() {
         Boolean wait = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[@id=\"checkout-loader\"]/div/img")));
         if(wait){
-//            WebElement inputCompany = new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/main/div[2]/div/div[2]/div[4]/ol/li[1]/div[2]/form/div/div[3]/div/input")));
-////            WebElement inputStreet = new We
-//            Actions actions = new Actions(driver);
-//            actions.sendKeys(inputCompany, "google").perform();
             driver.findElement(company).sendKeys("IG");
             driver.findElement(street).sendKeys("Jalan Kebanggan");
             driver.findElement(city).sendKeys("kota mati");
@@ -46,12 +41,6 @@ public class ShippingPage {
             chooseState.selectByIndex(2);
             valueOfState = chooseState.getFirstSelectedOption().getText();
             driver.findElement(posCode).sendKeys("42423");
-            Select chooseCountry = new Select(driver.findElement(country));
-            chooseCountry.selectByVisibleText("United States");
-            valueOfCountry = chooseCountry.getFirstSelectedOption().getText();
-//            WebElement inputPhone = new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(phone));
-//            Actions actions = new Actions(driver);
-//            actions.sendKeys(inputPhone, "0862827309825").perform();
             driver.findElement(phone).sendKeys("0862827309825");
         }
     }
@@ -60,41 +49,6 @@ public class ShippingPage {
         WebElement shippingMethod = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/main/div[2]/div/div[2]/div[4]/ol/li[2]/div/div[3]/form/div[1]/table/tbody/tr[2]/td[1]/input")));
         Actions actions = new Actions(driver);
         actions.moveToElement(shippingMethod).click().perform();
-    }
-
-    public String getFirstName() {
-        return driver.findElement(firstName).getAttribute("value");
-    }
-
-    public String getLastName() {
-        return driver.findElement(lastName).getAttribute("value");
-    }
-
-    public String getCompany() {
-        return driver.findElement(company).getAttribute("value");
-    }
-
-    public String getStreet() {
-        return driver.findElement(street).getAttribute("value");
-    }
-
-    public String getCity() {
-        return driver.findElement(city).getAttribute("value");
-    }
-
-    public String getState() {
-        return valueOfState;
-    }
-    public String getCountry() {
-        return valueOfCountry;
-    }
-
-    public String getPosCode() {
-        return driver.findElement(posCode).getAttribute("value");
-    }
-
-    public String getPhone() {
-        return driver.findElement(phone).getAttribute("value");
     }
 
     public PaymentPage submitForm() {
@@ -110,38 +64,22 @@ public class ShippingPage {
             WebElement summary = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"opc-sidebar\"]/div[1]/div/div[1]")));
             Actions actions = new Actions(driver);
             actions.moveToElement(summary).click().perform();
-            ourOrder();
         }
 
     }
 
-    public ArrayList ourOrder() {
-        List<WebElement> productName = driver.findElements(By.className("product-item-name"));
-        List<WebElement> qty = driver.findElements(By.className("details-qty"));
+    public String ourOrder() {
+        List<WebElement> productItem = driver.findElements(By.className("product-item"));
         ArrayList<String> barang = new ArrayList<>();
 
-
-        for (WebElement webElement : productName) {
+        for (WebElement webElement : productItem) {
             String name = webElement.getText();
             barang.add(name);
         }
-
-        for (WebElement webElement : qty) {
-            String quantity = webElement.getText();
-            barang.add(quantity);
-        }
-        return barang;
+        String order = barang.get(0)+ "\n" + barang.get(1);
+        return order;
     }
 
-    public String showBarang1() {
-        String pesanan = String.valueOf(ourOrder().get(0) + " " + ourOrder().get(2));
-        return pesanan;
-    }
-
-    public String showBarang2() {
-        String pesanan = String.valueOf(ourOrder().get(1) + " " + ourOrder().get(3));
-        return pesanan;
-    }
 
     public String getUrl() {
         Boolean wait = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[@id=\"checkout-loader\"]/div/img")));
